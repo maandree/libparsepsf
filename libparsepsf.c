@@ -264,7 +264,7 @@ libparsepsf_parse_font(const void *data, size_t size, struct libparsepsf_font *f
 					} else {
 						u32 = (uint32_t)u16;
 					}
-					n = grapheme_cp_encode(u32, utf8, sizeof(utf8));
+					n = grapheme_encode_utf8(u32, (char *)utf8, sizeof(utf8));
 					if (n > sizeof(utf8))
 						abort();
 					if (put_map(fontp, i, utf8, n))
@@ -297,7 +297,7 @@ libparsepsf_parse_font(const void *data, size_t size, struct libparsepsf_font *f
 					} else {
 						u32 = (uint32_t)u16;
 					}
-					n = grapheme_cp_encode(u32, utf8, sizeof(utf8));
+					n = grapheme_encode_utf8(u32, (char *)utf8, sizeof(utf8));
 					if (n > sizeof(utf8))
 						abort();
 					if (put_map_incomplete(fontp, utf8, n, &utf8_saved, &utf8_node))
