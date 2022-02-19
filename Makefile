@@ -48,8 +48,8 @@ install: libparsepsf.a
 	cp -- libparsepsf.a "$(DESTDIR)$(PREFIX)/lib"
 	cp -- libparsepsf.$(LIBEXT) "$(DESTDIR)$(PREFIX)/lib/libparsepsf.$(LIBMINOREXT)"
 	$(FIX_INSTALL_NAME) "$(DESTDIR)$(PREFIX)/lib/libparsepsf.$(LIBMINOREXT)"
-	ln -sf -- "libsha1.$(LIBMINOREXT)" "$(DESTDIR)$(PREFIX)/lib/libparsepsf.$(LIBMAJOREXT)"
-	ln -sf -- "libsha1.$(LIBMAJOREXT)" "$(DESTDIR)$(PREFIX)/lib/libparsepsf.$(LIBEXT)"
+	ln -sf -- "libparsepsf.$(LIBMINOREXT)" "$(DESTDIR)$(PREFIX)/lib/libparsepsf.$(LIBMAJOREXT)"
+	ln -sf -- "libparsepsf.$(LIBMAJOREXT)" "$(DESTDIR)$(PREFIX)/lib/libparsepsf.$(LIBEXT)"
 	cp -- libparsepsf.h "$(DESTDIR)$(PREFIX)/include"
 
 uninstall:
