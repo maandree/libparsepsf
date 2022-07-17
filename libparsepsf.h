@@ -115,7 +115,8 @@ int libparsepsf_parse_font(const void *data, size_t size, struct libparsepsf_fon
  * @return           The index of the glyph, plus 1; 0 if the glyph if the
  *                   end of the text is reached or if no glyph is found,
  *                   or (only if `font->map` is `NULL`) if an illegal byte
- *                   sequence was found
+ *                   sequence was found. `*remp` and `*next_cp` are not
+ *                   updated if this function returns 0.
  * @throws  EILSEQ   If an illegal byte sequence was found (only if
  *                   `font->map` is `NULL`)
  */
