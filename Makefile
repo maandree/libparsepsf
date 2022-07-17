@@ -53,7 +53,7 @@ libparsepsf.a: $(OBJ)
 demo: demo.o libparsepsf.a
 	$(CC) -o $@ $@.o libparsepsf.a $(LDFLAGS)
 
-install: libparsepsf.a
+install: libparsepsf.a libparsepsf.$(LIBEXT)
 	mkdir -p -- "$(DESTDIR)$(PREFIX)/lib"
 	mkdir -p -- "$(DESTDIR)$(PREFIX)/include"
 	mkdir -p -- "$(DESTDIR)$(MANPREFIX)/man0"
