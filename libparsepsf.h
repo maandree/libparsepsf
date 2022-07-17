@@ -88,8 +88,8 @@ void libparsepsf_destroy_font(struct libparsepsf_font *font);
  * @param   fontp                  Output parameter for the font, should be deallocated
  *                                 using `libparsepsf_destroy_font` when no longer
  *                                 needed (only allocated on success completion)
- * @param   unrecognised_versionp  Normally set to 0; set to 1 if the minor version in
- *                                 the font file is unrecognised (backwards-compatibility
+ * @param   unrecognised_versionp  Normally set to 0; set to the minor version in the
+ *                                 font file if it is unrecognised (backwards-compatibility
  *                                 is assumed, so it will still be parsed as a supported
  *                                 font file)
  * @return                         0 on successful completion, -1 on failure

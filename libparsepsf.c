@@ -326,7 +326,7 @@ libparsepsf_parse_font(const void *data, size_t size, struct libparsepsf_font *f
 		if (header.psf2.height * ((header.psf2.width + 7) / 8) != header.psf2.charsize)
 			goto ebfont;
 		if (header.psf2.version > PSF2_MAXVERSION)
-			*unrecognised_versionp = 1;
+			*unrecognised_versionp = header.psf2.version;
 		fontp->num_glyphs = (size_t)header.psf2.num_glyphs;
 		fontp->height     = (size_t)header.psf2.height;
 		fontp->width      = (size_t)header.psf2.width;
