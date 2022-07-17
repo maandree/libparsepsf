@@ -1,0 +1,26 @@
+.TH LIBPARSEPSF_DESTROY_FONT 3 LIBPARSEPSF
+.SH NAME
+libparsepsf_destroy_font \- Deallocate a parsed PSF files
+.SH SYNOPSIS
+.nf
+#include <libparsepsf.h>
+
+void libparsepsf_destroy_font(struct libparsepsf_font *\fIfont\fP);
+.fi
+.PP
+Link with
+.IR -lparsepsf .
+.SH DESCRIPTION
+The
+.B libparsepsf_destroy_font
+function deallocates the contents of
+.IR *font ,
+without deallocating the memory that the pointer
+itself points to directly (only memory pointed
+to by nested pointers).
+.SH RETURN VALUE
+None.
+.SH ERRORS
+None.
+.SH SEE ALSO
+.BR libparsepsf_parse_font (3)

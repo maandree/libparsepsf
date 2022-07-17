@@ -1,0 +1,133 @@
+.TH LIBPARSEPSF_PARSE_FONT 3 LIBPARSEPSF
+.SH NAME
+libparsepsf_parse_font \- Parse the contents of a PSF file
+.SH SYNOPSIS
+.nf
+#include <libparsepsf.h>
+
+struct libparsepsf_unimap {
+        struct libparsepsf_unimap *\fInonterminal\fP[256];
+        size_t \fIterminal\fP[256];
+};
+
+struct libparsepsf_font {
+        size_t \fInum_glyphs\fP;
+        size_t \fIheight\fP;
+        size_t \fIwidth\fP;
+        uint8_t *\fIglyph_data\fP;
+        struct libparsepsf_unimap *\fImap\fP;
+};
+
+int libparsepsf_parse_font(const void *\fIdata\fP, size_t \fIsize\fP, struct libparsepsf_font *\fIfontp\fP, uint32_t *\fIunrecognised_versionp\fP);
+.fi
+.PP
+Link with
+.IR -lparsepsf .
+.SH DESCRIPTION
+The
+.B libparsepsf_parse_font
+parses the contents of a PSF (PC Screen Font) file,
+and output the information in the file, in
+.IR *fontp
+upon successful completion, which should be deallocated
+using the
+.BR libparsepsf_destroy_font (3)
+function when it is no longer needed. On failure
+.IR *fontp
+is set so that
+.BR libparsepsf_destroy_font (3)
+can be called without any side-effects.
+.PP
+.I data
+shall contain the content contents of the entire
+font file, and
+.I size
+shall be set to the number of bytes in the font file.
+.PP
+.I *unrecognised_versionp
+is normally set to 0, however, if the minor format
+version used by the font file is not recognised,
+.I *unrecognised_versionp
+will be set to that number.
+.I *unrecognised_versionp
+being set to a non-zero number, does not indicate
+failure as it is assumed that backwards-compatibility
+exists within major format versions.
+.PP
+No argument may be
+.IR NULL .
+.PP
+.I fontp->num_glyph
+will be set to the number of glyphs in the font,
+.I fontp->width
+will be set to the bit-width of each glyph in the font,
+.I fontp->height
+will be set to the bit-height of each glyph in the font,
+.I fontp->glyph_data
+will contain the glyphs in the font, and
+.I fontp->map
+will either be set to
+.I NULL
+or a trie that maps byte sequences to glyph indices.
+.PP
+If
+.I fontp->map
+is
+.IR NULL ,
+unicode character points map directly (identity mapping)
+to glyph indices; and UTF-8 the assumed encoding; otherwise
+.I fontp->map
+maps byte sequences (from an unspecified encoding, usually
+UTF-8) to glyph indices.
+.I fontp->map
+can be searched using the
+.BR libparsepsf_get_glyph (3)
+function, but enumeration must be done manually. Note that
+an entry can be multiple characters wide, for example to
+deal with context dependent glyphs and grapheme clusters.
+In each node in the trie,
+.IR nonterminal[b] ,
+for a byte
+.IR b ,
+maps either to
+.I NULL
+if there is no glyph for a continuation on the current
+byte sequence, or to a trie-node for the byte in the
+byte sequence. Regardless of the value of
+.IR nonterminal[b] ,
+.I terminal[b] ,
+may map either to 0, if there is no glyph for the current
+byte sequence, or the glyph index, plus 1, for the current
+byte sequence.
+.PP
+.I fontp->glyph_data
+is a ordered array of glyph, where is glyph is oriented in
+row-major and most-significant-bit-first order, but each
+row is also right-padded to a multiple of 8 bits, meaning
+that the bit 0x80 in the first byte for a glyph represents
+the left-most, top-most bit in the, and 0x40 in the same
+byte represents the bit directly right to it. Bit on means
+ink on, bit off means ink off. For a glyph index
+.IR i ,
+.I &fontp->glyph_data[i*(fontp->height*(fontp->width/8+(fontp->width%8>0)))]
+maps to the start of the glyph with that index.
+.SH RETURN VALUE
+The
+.B libparsepsf_parse_font
+function returns 0 upon successful completion.
+On failure, -1 is returned and
+.I errno
+is set appropriately to indicate the error.
+.SH ERRORS
+The
+.B libparsepsf_parse_font
+function may fail if:
+.TP
+.B ENOMEM
+The function failed to allocate enough memory.
+.TP
+.B EBFONT
+The font file is corrupt or unsupported.
+.SH SEE ALSO
+.BR libparsepsf_destroy_font (3),
+.BR libparsepsf_get_glyph (3)

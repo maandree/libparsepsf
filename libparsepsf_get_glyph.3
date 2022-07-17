@@ -1,0 +1,94 @@
+.TH LIBPARSEPSF_GET_GLYPH 3 LIBPARSEPSF
+.SH NAME
+libparsepsf_get_glyph \- Get glyph to use in a position in a text
+.SH SYNOPSIS
+.nf
+#include <libparsepsf.h>
+
+size_t libparsepsf_get_glyph(struct libparsepsf_font *\fIfont\fP, const char *\fIc\fP, size_t *\fIremp\fP, const char **\fInext_cp\fP);
+.fi
+.PP
+Link with
+.IR -lparsepsf .
+.SH DESCRIPTION
+The
+.B libparsepsf_get_glyph
+function gets the next glyph to print for a line of text.
+.PP
+.I font
+be a parsed font: created with
+.BR libparsepsf_parse_font (3).
+.PP
+.I c
+shall be the current position in the text, and either
+.I remp
+shall be
+.I NULL
+or
+.I *remp
+shall be the number of bytes remaining in the text.
+.PP
+Upon successful completion, the number of bytes
+read from
+.I c
+will be subtracted from
+.IR *remp
+(unless
+.I remp
+is
+.IR NULL ),
+and, unless
+.I next_cp
+is
+.I NULL,
+.I *next_cp
+will be set to
+.I &c[n]
+where
+.I n
+is the number of bytes in the byte-sequence for the
+returned glyph.
+.PP
+If and only if
+.I remp
+is
+.IR NULL ,
+the
+.B libparsepsf_get_glyph
+function will assume the text ends at the first NUL byte.
+.PP
+.I *remp
+and
+.I *next_cp
+are only updated if the function returns a non-zero value.
+.SH RETURN VALUE
+The
+.B libparsepsf_get_glyph
+function returned a glyph index, plus 1, upon successful
+completion, or 0 if the end of the text has been reached
+or if there is no glyph for the current position. On
+failure the function returns 0 and sets
+.I errno
+appropriately to indicate the error.
+.SH ERRORS
+The
+.B libparsepsf_get_glyph
+function may fail if:
+.TP
+.B EILSEQ
+If
+.I font->map
+is
+.I NULL
+and an illegal byte sequence was found.
+.SH NOTE
+A sequence of multiple characters can be rendered as a
+single glyph, therefore it is important that the entire
+text line has been loaded and there all characters on
+the line in prior positions have been mapped.
+.PP
+The
+.B libparsepsf_get_glyph
+function does not treat <newline> especially.
+.SH SEE ALSO
+.BR libparsepsf_parse_font (3)

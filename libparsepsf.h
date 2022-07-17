@@ -60,7 +60,7 @@ struct libparsepsf_font {
 	/**
 	 * Glyph trie, maps from byte sequences to glyph indices;
 	 * you can use `libparsepsf_get_glyph` to search it
-	 * (enumeration has to be done manually); not that an
+	 * (enumeration has to be done manually); note that an
 	 * entry can be multiple characters wide, for example
 	 * to deal with context dependent glyphs and grapheme
 	 * clusters

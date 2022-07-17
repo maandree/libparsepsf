@@ -1,0 +1,39 @@
+.TH LIBPARSEPSF.H 0 LIBPARSEPSF
+.SH NAME
+libparsepsf.h \- Header file for interpreting PSF (PC Screen Font) files.
+.SH SYNOPSIS
+.nf
+#include <libparsepsf.h>
+.fi
+.PP
+Link with
+.IR -lparsepsf .
+.SH DESCRIPTION
+The
+.B <libparsepsf.h>
+header defines structures and functions for interpreting PSF
+(PC Screen Font) files.
+.PP
+This header defines the following functions:
+.TP
+.BR libparsepsf_parse_font (3)
+Parse a PSF file.
+.TP
+.BR libparsepsf_get_glyph (3)
+Get glyph to use at a position in a text string.
+.TP
+.BR libparsepsf_destroy_font (3)
+Deallocate a parsed PSF file.
+.PP
+This header defines the following structures:
+.TP
+.B struct libparsepsf_font
+Structure containing all font information.
+.TP
+.B struct libparsepsf_unimap
+Node for byte-sequence-to-glyph mapping trie.
+.SH SEE ALSO
+.BR libparsepsf (7),
+.BR libparsepsf_parse_font (3),
+.BR libparsepsf_get_glyph (3),
+.BR libparsepsf_destroy_font (3)
