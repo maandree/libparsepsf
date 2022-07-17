@@ -417,14 +417,14 @@ libparsepsf_get_glyph(const struct libparsepsf_font *font, const char *c, size_t
 			errno = EILSEQ;
 			return 0;
 		}
-		if (remp)
-			rem = *remp - n;
-		c = &c[n];
 		glyph = (size_t)cp;
 		if (glyph >= font->num_glyphs)
 			return 0;
-		glyph += 1;
-		goto out;
+		if (next_cp)
+			*next_cp = &c[n];
+		if (remp)
+			*remp = *remp - n;
+		return glyph + 1;
 
 	} else if (remp) {
 		rem = *remp;
@@ -459,7 +459,6 @@ libparsepsf_get_glyph(const struct libparsepsf_font *font, const char *c, size_t
 	}
 
 	glyph = node->terminal[*(const uint8_t *)c];
-out:
 	if (glyph) {
 		if (next_cp)
 			*next_cp = &c[1];
