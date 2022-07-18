@@ -31,6 +31,8 @@ MAN3 =\
 MAN7 =\
 	libparsepsf.7
 
+LOBJ = $(OBJ:.o=.lo)
+
 
 all: libparsepsf.a libparsepsf.$(LIBEXT) demo
 $(OBJ): $(HDR)
