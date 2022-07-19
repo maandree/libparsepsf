@@ -26,7 +26,11 @@ MAN0 =\
 MAN3 =\
 	libparsepsf_destroy_font.3\
 	libparsepsf_get_glyph.3\
-	libparsepsf_parse_font.3
+	libparsepsf_parse_font.3\
+	libparsepsf_font.3\
+	libparsepsf_unimap.3\
+	struct_libparsepsf_font.3\
+	struct_libparsepsf_unimap.3
 
 MAN7 =\
 	libparsepsf.7
