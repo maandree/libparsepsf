@@ -1,6 +1,6 @@
 .TH LIBPARSEPSF.H 0 LIBPARSEPSF
 .SH NAME
-libparsepsf.h \- Header file for interpreting PSF (PC Screen Font) files.
+libparsepsf.h \- Header file for interpreting PSF (PC Screen Font) files
 .SH SYNOPSIS
 .nf
 #include <libparsepsf.h>
