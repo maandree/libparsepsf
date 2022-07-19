@@ -36,6 +36,7 @@ MAN7 =\
 	libparsepsf.7
 
 LOBJ = $(OBJ:.o=.lo)
+SRC = $(OBJ:.o=.c)
 
 
 all: libparsepsf.a libparsepsf.$(LIBEXT) demo
@@ -86,7 +87,8 @@ uninstall:
 	-cd -- "$(DESTDIR)$(MANPREFIX)/man7" && rm -f -- $(MAN7)
 
 clean:
-	-rm -f -- *.o *.lo *.su *.a *.so *.so.* demo
+	-rm -f -- *.o *.a *.lo *.su *.so *.so.* *.dll *.dylib
+	-rm -f -- *.gch *.gcov *.gcno *.gcda *.$(LIBEXT) demo
 
 .SUFFIXES:
 .SUFFIXES: .lo .o .c
